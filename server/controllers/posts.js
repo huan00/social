@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 import PostMessage from '../models/postMessage.js'
 
 export const getPosts = async (req, res) => {
-  // const { page } = req.query
+  const { page } = req.query
   try {
     const LIMIT = 8
     const startIndex = (Number(page) - 1) * LIMIT //get the starting index of every page
@@ -22,6 +22,17 @@ export const getPosts = async (req, res) => {
     })
   } catch (error) {
     res.status(404).json({ message: error.message })
+  }
+}
+
+export const getPost = async (req, res) => {
+  const { id } = req.params
+  try {
+    const post = await PostMessage.findById(id)
+
+    res.status(200).json(post)
+  } catch (error) {
+    console.log(error)
   }
 }
 //query ?
